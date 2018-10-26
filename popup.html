@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>extension for chrome-track-activity</title>
+    <script src="tracking.js"></script>
+    <script src="background.js"></script>
+    <script src="details.js"></script>
+
+</head>
+
+<body>
+    <p>User authentication</p>
+    <form action="background.html">
+        username: <input type="text" name="username" id="usr"> password:
+        <input type="password" name="password" id="pwd">
+        <input type="button" name="submit" id="submit" value="submit" onclick="getDetails()">
+    </form>
+</body>
+
+</html>

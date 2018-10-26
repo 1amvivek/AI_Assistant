@@ -1,0 +1,28 @@
+{
+    "manifest_version": 2,
+    "name": "Browsing Tracker",
+    "version": "1.0",
+    "description": "Track and log browsing activity using chrome-track-activity",
+    "background": {
+        //"page": "background.html"
+        "page": "popup.html"
+    },
+
+    "browser_action": {
+
+        "default_popup": "popup.html",
+        "default_title": "collecting data"
+    },
+    "icons": {
+        "16": "AI_logo_16.png",
+        "48": "AI_logo_48.png",
+        "128": "AI_logo_128.png"
+    },
+
+
+    "permissions": [
+        "storage",
+        "tabs",
+        "http://172.20.10.12:3000/"
+    ]
+}
