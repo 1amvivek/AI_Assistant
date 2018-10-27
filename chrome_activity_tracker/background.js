@@ -3,7 +3,6 @@ function formatTime(t) {
     return time;
 }
 
-
 function isJsonValid(str) {
     try {
         JSON.parse(str);

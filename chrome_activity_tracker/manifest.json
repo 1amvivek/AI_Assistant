@@ -4,7 +4,6 @@
     "version": "1.0",
     "description": "Track and log browsing activity using chrome-track-activity",
     "background": {
-        //"page": "background.html"
         "page": "popup.html"
     },
 
@@ -22,7 +21,6 @@
 
     "permissions": [
         "storage",
-        "tabs",
-        "http://172.20.10.12:3000/"
+        "tabs"
     ]
 }
