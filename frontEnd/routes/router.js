@@ -57,11 +57,8 @@ router.post('/', function (req, res, next) {
     err.status = 400;
     return next(err);
   }
-})
+}) 
 
-// TODO
-// GET /logs should give all logs of all users 
-// GET /logs/{user_id} should give all logs of given user_id
 
 // POST route to save logs data
 router.post('/logs', function(req, res){
@@ -84,6 +81,23 @@ router.post('/logs', function(req, res){
   });
 }
 );
+
+
+// GET logs of all users
+router.get('/logs', function(req, res) {
+  Logs.find().then(eachOne =>{
+    return res.json(eachOne);
+  })
+});
+
+
+// GET all logs of given user_id
+router.get('/logs/:user_id', function(req, res){
+  Logs.find({user_id:req.params.user_id}).then(eachOne =>{
+    return res.json(eachOne);
+  })
+});
+
 
 module.exports = router;
 
