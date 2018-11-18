@@ -6,7 +6,6 @@
     "background": {
         "page": "popup.html"
     },
-
     "browser_action": {
 
         "default_popup": "popup.html",
@@ -17,10 +16,10 @@
         "48": "AI_logo_48.png",
         "128": "AI_logo_128.png"
     },
-
-
     "permissions": [
+        "cookies",
         "storage",
-        "tabs"
+        "tabs",
+        "http://18.222.204.247:3000/"
     ]
 }
