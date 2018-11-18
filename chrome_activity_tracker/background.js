@@ -1,5 +1,5 @@
 function getPostURL() {
-    return "http://192.168.43.38:3000/"; // IP_Address of EC2 Instance.
+    return "http://18.222.204.247:3000/"; // IP_Address of EC2 Instance.
 }
 
 function getUserID(email, password) {
