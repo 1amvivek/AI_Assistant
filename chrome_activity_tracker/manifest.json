@@ -17,8 +17,9 @@
         "128": "AI_logo_128.png"
     },
     "permissions": [
+        "cookies",
         "storage",
         "tabs",
-        "http://192.168.43.38:3000/"
+        "http://18.222.204.247:3000/"
     ]
 }
