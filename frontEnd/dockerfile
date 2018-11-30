@@ -1,0 +1,13 @@
+# create a file named Dockerfile
+FROM node:8.12.0
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY . /app
+EXPOSE 3000
+
+RUN npm install
+RUN npm install bcrypt
+
+CMD ["./run_node.sh"]
