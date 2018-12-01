@@ -21,6 +21,34 @@ var UserSchema = new mongoose.Schema({
   passwordConf: {
     type: String,
     required: true,
+  },
+  maritalStatus: {
+    type: String,
+    required: true,
+  },
+  interests1: {
+    type: String,
+    required: true,
+  },
+  interests2: {
+    type: String,
+    required: true,
+  },
+  interests3: {
+    type: String,
+    required: true,
+  },
+  age: {
+    type: String,
+    required: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+  },
+  occupation: {
+    type: String,
+    required: true,
   }
 });
 
@@ -50,7 +78,7 @@ UserSchema.pre('save', function (next) {
   var user = this;
   bcrypt.hash(user.password, 10, function (err, hash) {
     if (err) {
-      return next(err);
+      console.log(err);
     }
     user.password = hash;
     next();
