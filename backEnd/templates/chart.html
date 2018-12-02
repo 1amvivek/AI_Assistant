@@ -6,24 +6,95 @@
         google.charts.load('current', {
             'packages': ['corechart']
         });
-        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawChart_user);
 
-        function drawChart() {
+        function drawChart_user() {
+
+            console.log("Inside chart function");
 
             var data = google.visualization.arrayToDataTable([
-                ['Category', 'Hours per Day'],
-                ['Technology', {{chart["Technology"]}}],
-                ['Videos', 392],
-                ['Ecommerce', 112],
-                ['Blogs', 56],
-                ['Social-Networking', 336]
+                ['Category', 'Visits'],
+                ['Technology', {{chart_user["Technology"]}}],
+                ['Social Networking', {{chart_user["Social Networking"]}}],
+                ['E-Commerce', {{chart_user["E-Commerce"]}}],
+                ['Blogs', {{chart_user["Blogs"]}}],
+                ['Google', {{chart_user["Google"]}}],
+                ['E-mail', {{chart_user["E-mail"]}}],
+                ['Finance', {{chart_user["Finance"]}}],
+                ['Health', {{chart_user["Health"]}}],
+                ['Miscellaneous', {{chart_user["Miscellaneous"]}}]
             ]);
 
+
             var options = {
-                title: 'UserID: Vivek Daily Activities'
+                title: 'UserID: Vivek Daily Activities in PieChart'
             };
 
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            var chart = new google.visualization.PieChart(document.getElementById('user_piechart'));
+
+            chart.draw(data, options);
+        }
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Category', 'User_Visits', 'All-Visits'],
+                ['Technology', {{chart_user["Technology"]}}, {{avg_user["Technology"]}}],
+                ['Social Networking', {{chart_user["Social Networking"]}}, {{avg_user["Social Networking"]}}],
+                ['E-Commerce', {{chart_user["E-Commerce"]}}, {{avg_user["E-Commerce"]}}],
+                ['Blogs', {{chart_user["Blogs"]}}, {{avg_user["Blogs"]}}],
+                ['Google', {{chart_user["Google"]}}, {{avg_user["Google"]}}],
+                ['E-mail', {{chart_user["E-mail"]}}, {{avg_user["E-mail"]}}],
+                ['Finance', {{chart_user["Finance"]}}, {{avg_user["Finance"]}}],
+                ['Health', {{chart_user["Health"]}}, {{avg_user["Health"]}}]
+      ]);
+
+      var options = {
+        title: 'Comparison of avg visits of all users with Vivek Daily Activities in Bar plot',
+        chartArea: {width: '50%'},
+        hAxis: {
+          title: 'Total Visits',
+          minValue: 0
+        },
+        vAxis: {
+          title: 'Categories'
+        }
+      };
+
+      var chart = new google.visualization.BarChart(document.getElementById('user_chart_div'));
+
+      chart.draw(data, options);
+    }
+    google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart_allUser);
+
+        function drawChart_allUser() {
+
+            console.log("Inside chart function");
+
+            var data = google.visualization.arrayToDataTable([
+                ['Category', 'Visits'],
+                ['Technology', {{all_user["Technology"]}}],
+                ['Social Networking', {{all_user["Social Networking"]}}],
+                ['E-Commerce', {{all_user["E-Commerce"]}}],
+                ['Blogs', {{all_user["Blogs"]}}],
+                ['Google', {{all_user["Google"]}}],
+                ['E-mail', {{all_user["E-mail"]}}],
+                ['Finance', {{all_user["Finance"]}}],
+                ['Health', {{all_user["Health"]}}],
+                ['Miscellaneous', {{all_user["Miscellaneous"]}}]
+            ]);
+
+
+            var options = {
+                title: 'All Users Daily Activities in PieChart'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('all_user_piechart'));
 
             chart.draw(data, options);
         }
@@ -31,7 +102,15 @@
 </head>
 
 <body>
-    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    <table class="columns">
+        <tr>
+            <td><div id="user_piechart" style="width: 700px; height: 500px;"></div></td>
+            <td><div id="all_user_piechart" style="width: 700px; height: 500px;"></div></td>
+        </tr>
+        <tr>
+            <td><div id="user_chart_div" style="width: 900px; height: 500px;"></div></td>
+        </tr>
+    </table>
 </body>
 
 </html>

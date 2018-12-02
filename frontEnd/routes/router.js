@@ -11,7 +11,7 @@ router.post('/', function (req, res, next) {
   if (req.body.password !== req.body.passwordConf) {
     var err = new Error('Passwords do not match.');
     err.status = 400;
-    console.log(err);    
+    console.log(err);
     res.send("Passwords do not match");
   }
 
@@ -60,8 +60,14 @@ router.post('/', function (req, res, next) {
         res.setHeader('content-type', 'text/javascript');
         return res.send({
           id: user._id,
-          // username: user.username,
-          // email: user.email
+          username: user.username,
+          age: user.age,
+          interests1: user.interests1,
+          interests2: user.interests2,
+          interests3: user.interests3,
+          gender: user.gender,
+          occupation: user.occupation,
+          maritalStatus: user.maritalStatus
         });
       }
     });
