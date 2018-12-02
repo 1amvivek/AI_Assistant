@@ -6,12 +6,13 @@ var Logs = require('../models/logs');
 
 //POST route for updating data
 router.post('/', function (req, res, next) {
+  console.log("Sign up and Log in API called");
   // confirm that user typed same password twice
   if (req.body.password !== req.body.passwordConf) {
     var err = new Error('Passwords do not match.');
     err.status = 400;
-    res.send("passwords dont match");
-    return next(err);
+    console.log(err);    
+    res.send("Passwords do not match");
   }
 
   if (req.body.email &&
@@ -19,29 +20,41 @@ router.post('/', function (req, res, next) {
     req.body.password &&
     req.body.passwordConf) {
 
+    console.log("User Sign Up method called");
+      
     var userData = {
       email: req.body.email,
       username: req.body.username,
       password: req.body.password,
       passwordConf: req.body.passwordConf,
+      maritalStatus: req.body.maritalStatus,
+      interests1: req.body.interests1,
+      interests2: req.body.interests2,
+      interests3: req.body.interests3,
+      age: req.body.age,
+      gender: req.body.gender,
+      occupation: req.body.occupation,
     }
-
-    User.create(userData, function (error, user) {
-      if (error) {
-        return next(error);
-      } else {
-        return res.send({id: user._id});
-        
-      }
-    });
+    if(typeof(userData) !== 'undefined'){
+      console.log("User data:" + userData);
+      User.create(userData, function (error, user) {
+        if (error) {
+          console.log(error);
+        } else {
+          return res.send({id: user._id});
+          
+        }
+      });
+    }
 
   } else if (req.body.logemail && req.body.logpassword) {
     User.authenticate(req.body.logemail, req.body.logpassword, function (error, user) {
+      console.log("User Log in method called");      
       if (error || !user) {
                 
         var err = new Error('Wrong email or password.');
         err.status = 401;
-        return next(err);
+        console.log(err);        
       } else {
         req.session.userId = user._id;
         res.setHeader('content-type', 'text/javascript');
@@ -55,36 +68,41 @@ router.post('/', function (req, res, next) {
   } else {
     var err = new Error('All fields required.');
     err.status = 400;
-    return next(err);
+    console.log(err);
   }
 }) 
 
 
 // POST route to save logs data
 router.post('/logs', function(req, res){
-      var logsData = {
-      url: req.body.url,
-      time: req.body.time,
-      user_id: req.body.user_id,
-      body: req.body.body,
-      title: req.body.title,
-      url_category: req.body.url_category,
-      searchString: req.body.searchString,
+  console.log("POST /logs API called");  
+  var logsData = {
+    url: req.body.url,
+    time: req.body.time,
+    user_id: req.body.user_id,
+    body: req.body.body,
+    title: req.body.title,
+    url_category: req.body.url_category,
+    searchString: req.body.searchString,
   }
 
-  Logs.create(logsData, function (error, log) {
-    if (error) {
-      return next(error);
-    } else {
-      return res.send({id: log._id});
-    }
-  });
-}
-);
+  if(typeof(logsData)!== 'undefined'){
+    console.log("Logs Data: ");
+    console.log(logsData);
+    Logs.create(logsData, function (error, log) {
+      if (error) {
+        console.log(error);
+      } else {
+        return res.send({id: log._id});
+      }
+    });
+  }
+});
 
 
 // GET logs of all users
 router.get('/logs', function(req, res) {
+  console.log("GET /logs API called for all users");  
   Logs.find().then(eachOne =>{
     return res.json(eachOne);
   })
@@ -94,6 +112,8 @@ router.get('/logs', function(req, res) {
 // GET all logs of given user_id
 router.get('/logs/:user_id', function(req, res){
   Logs.find({user_id:req.params.user_id}).then(eachOne =>{
+    console.log("GET /logs/:user_id API called");
+    console.log("User ID:" + req.params.user_id);
     return res.json(eachOne);
   })
 });
