@@ -13,7 +13,7 @@ app.secret_key = 'sansa'
 
 @app.route('/')
 def landing_page():
-    return render_template('landing_page.html')
+    return render_template('index.html')
 
 
 @app.route('/chart')
@@ -115,6 +115,7 @@ def login():
             elif r.status_code == 200:
                 resp = json.loads(r.text)
                 print("Successfully logged in")
+
                 session['user_id'] = resp["id"]
                 session['username'] = resp["username"]
                 session['gender'] = resp["gender"]
@@ -164,7 +165,7 @@ def signup():
                                 "age": age
                                 })
 
-        return render_template('landing_page.html')
+        return render_template('index.html')
     except Exception as e:
         print(e)
         return str(e)
@@ -243,7 +244,7 @@ def count_users():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    return render_template('logout.html')
+    return render_template('index.html')
 
 # http://localhost:5000/habits?id=5bf0c3889c7cd00010aa1134
 @app.route('/habits')
