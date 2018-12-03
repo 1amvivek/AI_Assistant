@@ -1,21 +1,35 @@
-from flask import Flask, render_template, session, request
 import requests
 import json
 import ast
 from models.habits_model import get_habits
 from models.interests_model import get_interests
+from flask import Flask, render_template, session, request, redirect, url_for
+
 URL = "http://18.222.204.247:3000/"
 
 app = Flask(__name__)
 app.secret_key = 'sansa'
 
 
+@app.route('/')
+def landing_page():
+    return render_template('landing_page.html')
+
+
 @app.route('/chart')
 def chart():
+
+    chart_user_has_content = True
     #for pie chart for a particular user
+
+    username = session['username']
+
     user_logs = logAnalysis("user")
 
     catlist = ast.literal_eval(user_logs)
+
+    if (sum(list(catlist.values())) == 0):
+        chart_user_has_content = False
 
     chart_user = {"Technology": catlist['technology'],
                   "Social Networking": catlist['social_networking'],
@@ -64,15 +78,36 @@ def chart():
                 "Health": catlist_all['health'],
                 "Miscellaneous": catlist_all['misc']}
 
+    return render_template('chart.html', username=username, chart_user=chart_user, avg_user=avg_user, all_user=all_user,
+                           chart_user_has_content=chart_user_has_content)
 
 
-    return render_template('chart.html', chart_user=chart_user, avg_user=avg_user, all_user=all_user)
+@app.route('/login_page')
+def login_page():
+    return render_template('login.html')
 
 
-@app.route('/login')
+@app.route('/signup_page')
+def signup_page():
+    return render_template('signup.html')
+
+
+@app.route('/login', methods=['POST'])
 def login():
     try:
-        r = requests.post(URL, json={"logemail": "cnk90@gmail.com", "logpassword": "cnk90"})
+        logemail = request.form['logemail']
+        logpassword = request.form['logpassword']
+
+        print(logemail)
+        print(logpassword)
+
+        if logemail is None or logpassword is None:
+            return "Correct Details"
+
+        r = requests.post(URL, json={"logemail": logemail, "logpassword": logpassword})
+
+        print("Hit the login URL")
+
         if r.status_code is not None:
             if r.status_code == 401:
                 print("Wrong password attempted")
@@ -81,27 +116,60 @@ def login():
                 resp = json.loads(r.text)
                 print("Successfully logged in")
                 session['user_id'] = resp["id"]
-                return "Logged in as {} <br>".format(session['user_id'])
+                session['username'] = resp["username"]
+                session['gender'] = resp["gender"]
+                session['occupation'] = resp["occupation"]
+                session['interests1'] = resp["interests1"]
+                session['interests2'] = resp["interests2"]
+                session['interests3'] = resp["interests3"]
+                session['maritalStatus'] = resp["maritalStatus"]
+                session['age'] = resp["age"]
+
+                return redirect(url_for('chart'))
             else:
                 return "Something wrong with the response {}".format(r.status_code)
         else:
             return "No status code, something wrong!"
-    except:
-        message = 'Connection failed to establish for {}'.format(URL)
-        print(message)
-        return message
+    except Exception as e:
+        print(e)
+        return str(e)
 
 
-@app.route('/signup')
+@app.route('/signup', methods=['POST'])
 def signup():
-    r = requests.post(URL, json={"email": "cnk91@gmail.com", "username": "cnk91@gmail.com", "password": "cnk91", "passwordConf": "cnk91"})
 
-    resp = r.text
+    try:
+        email = request.form['email']
+        username = request.form['username']
+        password = request.form['password']
+        passwordConf = request.form['passwordConf']
+        gender = request.form['options']
+        occupation = request.form['occupation']
+        interests1 = request.form['interests1']
+        interests2 = request.form['interests2']
+        interests3 = request.form['interests3']
+        maritalStatus = request.form['maritalStatus']
+        age = request.form['age']
 
-    return resp
+        requests.post(URL, json={"email": email,
+                                "username": username,
+                                "password": password,
+                                "passwordConf": passwordConf,
+                                "gender": gender,
+                                "occupation": occupation,
+                                "interests1": interests1,
+                                "interests2": interests2,
+                                "interests3": interests3,
+                                "maritalStatus": maritalStatus,
+                                "age": age
+                                })
+
+        return render_template('landing_page.html')
+    except Exception as e:
+        print(e)
+        return str(e)
 
 
-# @app.route('/logAnalysis', methods=['GET'])
 def logAnalysis(logs_for):
     try:
         if 'user_id' in session:
@@ -142,10 +210,9 @@ def logAnalysis(logs_for):
             return str(categories)
         else:
             return "Login into the application to see view the logs"
-    except:
-        message = 'Unable to fetch logs for {}'.format(session['user_id'])
-        print(message)
-        return message
+    except Exception as e:
+        print(e)
+        return str(e)
 
 
 def count_users():
@@ -168,16 +235,15 @@ def count_users():
             return len(users_list)
         else:
             return "Login into the application to see view the log analysis"
-    except:
-        message = 'Unable to fetch count of all users'
-        print(message)
-        return message
+    except Exception as e:
+        print(e)
+        return str(e)
 
 
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    return "Logged out successfully"
+    return render_template('logout.html')
 
 # http://localhost:5000/habits?id=5bf0c3889c7cd00010aa1134
 @app.route('/habits')

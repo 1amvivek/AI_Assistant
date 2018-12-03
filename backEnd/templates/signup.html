@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="/static/style.css" type="text/css">
+{% block body %}
+
+<form action="{{ url_for('signup') }}" method="post">
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Sign Up New User</h1>
+			</div>
+
+			<div class="login-form">
+
+				<div class="control-group">
+				<input type="text" class="login-field" placeholder="E-mail" name="email">
+				<!--<label class="login-field-icon fui-user" for="login-name"></label>  value="{{request.form.logemail}}" -->
+				</div>
+
+				<div class="control-group">
+				<input type="text" class="login-field" placeholder="Username" name="username">
+				<!--<label class="login-field-icon fui-user" for="login-name"></label>  value="{{request.form.logemail}}" -->
+				</div>
+
+				<div class="control-group">
+				<input type="password" class="login-field" placeholder="Password" name="password">
+				<!--<label class="login-field-icon fui-lock" for="login-pass"></label>  value="{{request.form.logpassword}}" -->
+				</div>
+
+				<div class="control-group">
+				<input type="password" class="login-field" placeholder="Confirm Password" name="passwordConf">
+				<!--<label class="login-field-icon fui-lock" for="login-pass"></label>  value="{{request.form.logpassword}}" -->
+				</div>
+
+				<div class="control-group">
+				<input type="radio" name="options" id="option1" value="FEMALE"> FEMALE </input><br>
+				<input type="radio" name="options" id="option2" value="MALE"> MALE </input><br>
+				<!--<label class="login-field-icon fui-user" for="login-name"></label>  value="{{request.form.logemail}}" -->
+				</div>
+
+				<div class="control-group">
+				<input type="text" class="login-field" placeholder="Occupation" name="occupation">
+				<!--<label class="login-field-icon fui-user" for="login-name"></label>  value="{{request.form.logemail}}" -->
+				</div>
+
+				<div class="control-group">
+				<input type="text" class="login-field" placeholder="Interests 1" name="interests1">
+				<!--<label class="login-field-icon fui-user" for="login-name"></label>  value="{{request.form.logemail}}" -->
+				</div>
+
+				<div class="control-group">
+				<input type="text" class="login-field" placeholder="Interests 2" name="interests2">
+				<!--<label class="login-field-icon fui-user" for="login-name"></label>  value="{{request.form.logemail}}" -->
+				</div>
+
+				<div class="control-group">
+				<input type="text" class="login-field" placeholder="Interests 3" name="interests3">
+				<!--<label class="login-field-icon fui-user" for="login-name"></label>  value="{{request.form.logemail}}" -->
+				</div>
+
+				<div class="control-group">
+				<input type="text" class="login-field" placeholder="Marital Status" name="maritalStatus">
+				<!--<label class="login-field-icon fui-user" for="login-name"></label>  value="{{request.form.logemail}}" -->
+				</div>
+
+				<div class="control-group">
+				<input type="text" class="login-field" placeholder="Age" name="age">
+				<!--<label class="login-field-icon fui-user" for="login-name"></label>  value="{{request.form.logemail}}" -->
+				</div>
+
+                <input type="submit" value="Sign Up" class="btn btn-primary btn-large btn-block" >
+			    <br>
+			</div>
+		</div>
+	</div>
+</form>
+
+{% endblock %}

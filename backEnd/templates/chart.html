@@ -25,9 +25,10 @@
                 ['Miscellaneous', {{chart_user["Miscellaneous"]}}]
             ]);
 
+            var username = '{{ username }}'
 
             var options = {
-                title: 'UserID: Vivek Daily Activities in PieChart'
+                title: 'Daily Activities in PieChart for: {{username}}'
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('user_piechart'));
@@ -52,7 +53,7 @@ function drawBasic() {
       ]);
 
       var options = {
-        title: 'Comparison of avg visits of all users with Vivek Daily Activities in Bar plot',
+        title: 'Comparison of avg visits of all users with {{username}} Daily Activities in Bar plot',
         chartArea: {width: '50%'},
         hAxis: {
           title: 'Total Visits',
@@ -103,8 +104,15 @@ function drawBasic() {
 <body>
     <table class="columns">
         <tr>
-            <td><div id="user_piechart" style="width: 700px; height: 500px;"></div></td>
+            {% if chart_user_has_content %}
+                <td><div id="user_piechart" style="width: 700px; height: 500px;"></div></td>
+            {% else %}
+                <!--<td><div style="width: 700px; height: 500px;"> </div></td>-->
+                No logs found for this user. Please log in to your chrome extension!
+            {% endif %}
+
             <td><div id="all_user_piechart" style="width: 700px; height: 500px;"></div></td>
+
         </tr>
         <tr>
             <td><div id="user_chart_div" style="width: 900px; height: 500px;"></div></td>

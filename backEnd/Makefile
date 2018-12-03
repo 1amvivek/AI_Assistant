@@ -2,7 +2,7 @@ help:
 	@echo targets are: build run build-clean
 
 build:
-	virtualenv -p python3 venv
+	virtualenv -p python venv
 
 install:
 	( \
@@ -11,7 +11,7 @@ install:
 	)
 
 run:
-	python3 app.py >> flask_logger.log 2>&1
+	python app.py >> flask_logger.log 2>&1
 
 build-clean:
 	rm -rf ./venv
