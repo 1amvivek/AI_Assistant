@@ -1,0 +1,20 @@
+Pitch: 
+
+As a user we browse something and we get those recommended in the Facebook or Amazon. (We get irritated right! Because we don't like someone analyzing us and in most cases the AI system analyzes it wrongly. [Apple example] )
+
+Issues:
+-> not transparent
+-> not Right [Apple example]
+-> You have just checked it but you are not interested in it.
+
+The system analyzes it wrongly because it considers only the demographic information but not psychographic infromation.
+
+What is Psychographic information?
+-> Mostly using Feedback forms or surveys. 
+
+We are solving this in our system.
+
+Aren't you curios like why the system is recommending you apple products. This system will tell you that!
+
+The idea is that we have a system which tracks the user content and generates psychographic information. 
+The system is very transparent that it shows what all information it has about you and even tells what it thinks about your habits, interests and why it thinks like that. (Explainability)
