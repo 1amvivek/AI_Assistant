@@ -1,0 +1,102 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawBarDaywise);
+
+        function drawBarDaywise() {
+              var data = google.visualization.arrayToDataTable([
+                ['Day', 'Visits'],
+                {% for key, value in aggr_logs.items() %}
+                        [ '{{key}}' , {{value['total']}} ],
+                {% endfor %}
+              ]);
+
+              var materialOptions = {
+                chart: {
+                  title: 'Habits Day-wise',
+                  subtitle: 'Tells which is your most active day in internet'
+                },
+                hAxis: {
+                  title: 'Visits',
+                  minValue: 0,
+                },
+                vAxis: {
+                  title: 'Day'
+                },
+                // bars: 'horizontal'
+              };
+              var materialChart = new google.charts.Bar(document.getElementById('day_chart'));
+              materialChart.draw(data, materialOptions);
+            }
+
+            google.charts.setOnLoadCallback(drawBarHourwise);
+
+        function drawBarHourwise() {
+              var data = google.visualization.arrayToDataTable([
+                ['Hour', 'Visits'],
+                {% for key, value in aggr_logs[habits.max_day].items() %}
+                    {% if not key == 'total' %}
+                        [ {{key}} , {{value}} ],
+                    {% endif %}
+                {% endfor %}
+              ]);
+
+              var materialOptions = {
+                chart: {
+                  title: 'Habits Hour-wise on {{habits.max_day}}',
+                  subtitle: 'Tells which is your most active hour in internet'
+                },
+                hAxis: {
+                  title: 'Visits',
+                  minValue: 0,
+                },
+                vAxis: {
+                  title: 'Day'
+                },
+                // bars: 'horizontal'
+              };
+              var materialChart = new google.charts.Bar(document.getElementById('hour_chart'));
+              materialChart.draw(data, materialOptions);
+            }
+    </script>
+</head>
+
+<body>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      
+      <h1> Your Habits </h1>
+      <ul>
+        <li style="color:green"> Your Most active day:  {{habits["max_day"]}} </li>
+        <li style="color:red"> Your Most inactive day:  {{habits["min_day"]}} </li>
+        <li style="color:green">
+         Your Most active hour: 
+         {% if habits["max_hour"]|int > 12 %} 
+            {{habits["max_hour"]|int - 12}} pm 
+          {% else %}
+            {{habits["max_hour"]}} am
+          {% endif %}
+        </li>
+        <li style="color:red"> 
+          Your Most inactive hour:
+          {% if habits["min_hour"]|int > 12 %} 
+            {{habits["min_hour"]|int - 12}} pm 
+          {% else %}
+            {{habits["min_hour"]}} am
+          {% endif %}
+        </li>
+
+      </ul>
+
+      <h2> Explainability for Habits </h2>
+      <center> 
+        <div id="day_chart" style="width: 1200px; height: 500px; margin-top: 100px"></div> 
+        <div id="hour_chart" style="width: 1200px; height: 500px; margin-top: 100px"></div>
+      </center>
+      <a href="{{ url_for('interests') }}"> Go to Interests Page </a>
+
+</body>
+
+</html>

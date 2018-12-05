@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>Arya</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="container">
+      <h1> What does the AI think about you? </h1>
+      <p> Users info Demographic vs Psychographic </p>
+
+      <table border="1px">
+        <tr>
+          <th> Demographic Information </th>
+          <th> Psychographic Information </th>
+        </tr>
+        <tr> 
+          <td> 
+            Username: {{session['username']}} <br />
+            Gender: {{session['gender'] }} <br />
+            Occupation: {{session['occupation']}} <br />
+            Interests given at signup: [ {{session['interests1']}}, {{session['interests2']}}, {{session['interests3']}} ]
+            <br />
+            Marital Status: {{session['maritalStatus']}}
+          </td>
+          <td>
+            Most Visited Day: {{session["habits"]["max_day"]}} <br />
+            Most Visited Hour: 
+            {% if session["habits"]["max_hour"] > 12 %} 
+              {{session["habits"]["max_hour"]|int - 12}} pm 
+            {% else %}
+              {{session["habits"]["max_hour"]}} am
+            {% endif %} <br />
+            Least Visited Day: {{session["habits"]["min_day"]}}<br />
+            Least Visited Hour:
+            {% if session["habits"]["min_hour"]|int > 12 %} 
+              {{session["habits"]["min_hour"]|int - 12}} pm 
+            {% else %}
+              {{session["habits"]["min_hour"]}} am
+            {% endif %} <br />
+            Interests suggested by Bob:  {{session["interests"]}} 
+          </td>
+        </tr>
+
+      </table>
+      <!-- Demographic Inforamtion:
+        
+      Psychographic Information:
+        {{session["habits"]}}
+        {{session["interests"]}}  -->
+
+    </div>
+    <a href="{{ url_for('logout') }}"> Logout </a>
+
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title> Arya | Explainer </title>
+	</head>
+	<body>
+		<h3> Category Explainer for input: <span style="color: blue"> {{input_val[0]}} </span> </h3> 
+		<h3> Predicted Catefory: {{interest}} </h3>
+		<table border="1px">
+		<tr>
+			<th> Input_key </th> 
+			<th> Contribution for prediction </th>
+		</tr>
+		{% for key, value in explainer.items() %}
+			{% if key != 'steve' %}
+				<tr> 
+					<td> {{key}} </td> 
+					{% if value|float > 0.00 %}
+						<td style="color:green"> {{value|int}} </td> 
+					{% else %}
+						<td style="color:red"> {{value}} </td> 
+					{%  endif %}
+					<!-- <td> {{value}} </td> -->
+				</tr>
+			{% endif %}
+		{% endfor %}
+		</table>
+	</body>
+</html>

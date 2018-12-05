@@ -85,9 +85,13 @@ def get_class_name_index(class_names, class_name):
 
 def explain_class(exp, idx):
     try:
-        return exp.as_list(label=idx)
-    except:
-        print("Error for {}".format(i))
+    	explainer = exp.as_list(label=idx)
+    	exp_dict = {}
+    	for row in explainer:
+    		exp_dict[row[0]] = "%.2f" %(row[1]*100)
+        return exp_dict
+    except Exception as e:
+        print("Error for {}".format(e))
         return None
 
 def get_interests(input_val):

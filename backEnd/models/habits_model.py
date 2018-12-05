@@ -31,7 +31,7 @@ def aggregate_logs(resp):
 			data[day] = {}
 			data[day]["total"] = 0
 		else:
-			if not hour in data:
+			if not hour in data[day]:
 				data[day][hour] = 1
 				data[day]["total"] += 1
 			else:
@@ -48,19 +48,22 @@ def get_min_max(data):
 
 	for day in data.keys():
 		if habits["max_day"] is None:
-			habits["max_day_value"] = data[day]["total"]
+			habits["max_day_value"] = int(data[day]["total"])
 			habits["max_day"] = day
 		else:
-			if habits["max_day"] > data[day]["total"]:
-				habits["max_day_value"] = data[day]["total"]
+			if habits["max_day_value"] < int(data[day]["total"]):
+				print("In here in else case of max_day")
+				print(day)
+				print("hello")
+				habits["max_day_value"] = int(data[day]["total"])
 				habits["max_day"] = day
 
 		if habits["min_day"] is None:
-			habits["min_day_value"] = data[day]["total"]
+			habits["min_day_value"] = int(data[day]["total"])
 			habits["min_day"] = day
 		else:
-			if habits["min_day"] < data[day]["total"]:
-				habits["min_day_value"] = data[day]["total"]
+			if habits["min_day_value"] > int(data[day]["total"]):
+				habits["min_day_value"] = int(data[day]["total"])
 				habits["min_day"] = day
 
 		for time in data[day].keys():
@@ -68,19 +71,19 @@ def get_min_max(data):
 				# print("Continuing in here")
 				continue
 			if habits["max_hour"] is None:
-				habits["max_hour_value"] = data[day][time]
+				habits["max_hour_value"] = int(data[day][time])
 				habits["max_hour"] = time
 			else:
-				if habits["max_hour"] > data[day][time]:
-					habits["max_hour_value"] = data[day][time]
+				if habits["max_hour_value"] < int(data[day][time]):
+					habits["max_hour_value"] = int(data[day][time])
 					habits["max_hour"] = time
 
 			if habits["min_hour"] is None:
-				habits["min_hour_value"] = data[day][time]
+				habits["min_hour_value"] = int(data[day][time])
 				habits["min_hour"] = time
 			else:
-				if habits["min_hour"] < data[day][time]:
-					habits["min_hour_value"] = data[day][time]
+				if habits["min_hour_value"] > int(data[day][time]):
+					habits["min_hour_value"] = int(data[day][time])
 					habits["min_hour"] = time
 
 	# print(habits)
