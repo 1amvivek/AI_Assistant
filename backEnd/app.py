@@ -325,5 +325,9 @@ def spent_exp():
 def admin():
 	return render_template('admin.html')
 
+@app.route('/dummy')
+def dummy():
+	return render_template('base.html')
+
 if __name__ == '__main__':
 	app.run(debug=True)

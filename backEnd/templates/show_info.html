@@ -1,15 +1,7 @@
-<html>
-  <head>
-    <title>Arya</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
-  </head>
-  <body>
-    <div class="container">
-      <h1> What does the AI think about you? </h1>
-      <p> Users info Demographic vs Psychographic </p>
+{% extends "base.html" %}
 
-      <table border="1px">
+{% block content %}
+    <table>
         <tr>
           <th> Demographic Information </th>
           <th> Psychographic Information </th>
@@ -43,14 +35,4 @@
         </tr>
 
       </table>
-      <!-- Demographic Inforamtion:
-        
-      Psychographic Information:
-        {{session["habits"]}}
-        {{session["interests"]}}  -->
-
-    </div>
-    <a href="{{ url_for('logout') }}"> Logout </a>
-
-  </body>
-</html>
+{% endblock %}

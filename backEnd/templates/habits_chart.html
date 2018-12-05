@@ -1,7 +1,7 @@
-<html>
+{% extends "base.html" %}
 
-<head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+{% block content %}
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {packages: ['corechart', 'bar']});
         google.charts.setOnLoadCallback(drawBarDaywise);
@@ -26,6 +26,7 @@
                 vAxis: {
                   title: 'Day'
                 },
+                colors: ['#18bc9c'],
                 // bars: 'horizontal'
               };
               var materialChart = new google.charts.Bar(document.getElementById('day_chart'));
@@ -37,6 +38,7 @@
         function drawBarHourwise() {
               var data = google.visualization.arrayToDataTable([
                 ['Hour', 'Visits'],
+
                 {% for key, value in aggr_logs[habits.max_day].items() %}
                     {% if not key == 'total' %}
                         [ {{key}} , {{value}} ],
@@ -56,19 +58,45 @@
                 vAxis: {
                   title: 'Day'
                 },
+                colors: ['#18bc9c'],
+
                 // bars: 'horizontal'
               };
               var materialChart = new google.charts.Bar(document.getElementById('hour_chart'));
               materialChart.draw(data, materialOptions);
             }
     </script>
-</head>
-
-<body>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-      
-      <h1> Your Habits </h1>
-      <ul>
+
+      <!-- <div>
+        <img class="img-fluid mb-5 d-block mx-auto" src="static/img/profile.png" alt="" style="height: 10%; width: 30%">
+      </div> -->
+      <div style="margin-top: 50px;">
+        <h3> Bob predicts your habits as </h3>
+      <ul style="list-style-type: none; margin: 0; padding: 0;">
+        <li>
+          <p> Bob says your most active day is <b>{{habits["max_day"]}}</b> and 
+              <b>{% if habits["max_hour"]|int > 12 %} 
+                {{habits["max_hour"]|int - 12}} pm 
+              {% else %}
+                {{habits["max_hour"]}} am
+              {% endif %}</b>
+              is your most active hour.
+          </p>
+        </li>
+        <li>
+          <p> Bob says your most active day is <b>{{habits["min_day"]}}</b> and 
+              <b>{% if habits["min_hour"]|int > 12 %} 
+                {{habits["min_hour"]|int - 12}} pm 
+              {% else %}
+                {{habits["min_hour"]}} am
+              {% endif %}</b>
+              is your most active hour.
+          </p>
+        </li>
+      </ul>
+    </div>
+      <!-- <ul>
         <li style="color:green"> Your Most active day:  {{habits["max_day"]}} </li>
         <li style="color:red"> Your Most inactive day:  {{habits["min_day"]}} </li>
         <li style="color:green">
@@ -81,22 +109,23 @@
         </li>
         <li style="color:red"> 
           Your Most inactive hour:
-          {% if habits["min_hour"]|int > 12 %} 
-            {{habits["min_hour"]|int - 12}} pm 
-          {% else %}
-            {{habits["min_hour"]}} am
-          {% endif %}
+          
         </li>
 
       </ul>
-
-      <h2> Explainability for Habits </h2>
-      <center> 
-        <div id="day_chart" style="width: 1200px; height: 500px; margin-top: 100px"></div> 
-        <div id="hour_chart" style="width: 1200px; height: 500px; margin-top: 100px"></div>
-      </center>
-      <a href="{{ url_for('interests') }}"> Go to Interests Page </a>
-
-</body>
-
-</html>
+ -->
+      <div class="habits_bar_chart" style="margin-top: 30px; margin-bottom: 30px;">
+        <h4> Why does BOB think you are most active on <b>{{habits["max_day"]}}</b>? </h4>
+        <div id="day_chart" style="width: 100%; height: 500px; "></div>
+      </div>
+      <div class="habits_bar_chart" style="margin-top: 30px; margin-bottom: 30px;">
+        <h4> Why does BOB think you are most active at 
+                <b>{% if habits["max_hour"]|int > 12 %} 
+                  {{habits["max_hour"]|int - 12}} pm 
+                {% else %}
+                  {{habits["max_hour"]}} am
+                {% endif %}</b> ?
+        </h4>
+        <div id="hour_chart" style="width: 100%; height: 500px;"></div>
+      </div>
+{% endblock %}
