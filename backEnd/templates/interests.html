@@ -2,10 +2,10 @@
 
 {% block content %}
 <div style="margin-top: 50px;">
-
-  <h4>Bob says you are interested in
-    <b>[{% for interest, blogs in interests.items() %} {{ interest }} {% endfor %}]</b>
-  </h4>
+    <h3> Bob predicts your interests as </h3>
+      <!-- <ul style="list-style-type: none; ">
+        {% for interest, blogs in interests.items() %} <li> {{ interest }}  </li> {% endfor %}
+      </ul> -->
 </div>
 	<!-- <ul>
 	{% for interest, blogs in interests.items() %}
@@ -13,9 +13,9 @@
 	{% endfor %}
 	</ul> -->
 
-<h4> Some News/Blogs headlines that you have read before. </h4>
+<!-- <h4> Some News/Blogs headlines that you have read before. </h4> -->
 {% for interest, blogs in interests.items() %}
-	<button class="collapsible">Open {{ interest }}</button>
+	<button class="collapsible"> {{ interest }}</button>
 	<div class="content">
 	{% for blog in blogs %}
 	  <p>{{blog}}</p>
