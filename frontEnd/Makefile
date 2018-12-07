@@ -19,7 +19,6 @@ run-all-hard: pull-image run-mongo run-app-detached
 
 clean:
 	-docker rm -f arya_detached arya_interactive
-	-docker rmi mongo:latest
 	-docker rmi cnkdock1890/arya
 
 clean-hard:

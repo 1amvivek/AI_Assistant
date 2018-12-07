@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-top: 50px;">
+    <h3> Bob predicts your interests as </h3>
+      <!-- <ul style="list-style-type: none; ">
+        {% for interest, blogs in interests.items() %} <li> {{ interest }}  </li> {% endfor %}
+      </ul> -->
+</div>
+	<!-- <ul>
+	{% for interest, blogs in interests.items() %}
+		<li> {{ interest }}</li>
+	{% endfor %}
+	</ul> -->
+
+<!-- <h4> Some News/Blogs headlines that you have read before. </h4> -->
+{% for interest, blogs in interests.items() %}
+	<button class="collapsible"> {{ interest }}</button>
+	<div class="content">
+	{% for blog in blogs %}
+	  <p>{{blog}}</p>
+	  <a href="{{ url_for('interests_exp') }}?input_val= '{{blog}}'"> Show why AI classifies it as {{interest}} </a>
+	  <hr>
+	  <br />
+	{% endfor %}
+	</div>
+{% endfor %}
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+  });
+}
+</script>
+{% endblock %}

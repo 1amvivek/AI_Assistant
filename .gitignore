@@ -1,0 +1,7 @@
+backend/venv/
+backEnd/flask_logger.log
+.DS_Store
+*.pyc
+.idea
+*.sav
+data/

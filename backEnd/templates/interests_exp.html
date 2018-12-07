@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+		<h5> Bob has categorized <span style="color: blue"> {{input_val[0]}} </span> as <b>{{interest}} </b> </h5> 
+		<table id="customers">
+		<tr>
+			<th> Input_key </th> 
+			<th> Positive vs Negative </th>
+			<th> Contribution </th>
+		</tr>
+		{% for key, value in explainer.items() %}
+			{% if key != 'steve' %}
+				<tr> 
+					<td> {{key}} </td> 					
+					{% if value|float > 0.00 %}
+						<td style="color:green"> Postive </td> 
+					{% else %}
+						<td style="color:red"> Negative </td> 
+					{%  endif %}
+					{% if value|float > 0.00 %}
+						<td style="color:green"> {{value|int}}% </td> 
+					{% else %}
+						<td style="color:red"> {{value}}% </td> 
+					{%  endif %}
+				</tr>
+			{% endif %}
+		{% endfor %}
+		</table>
+{% endblock %}
